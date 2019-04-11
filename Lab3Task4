@@ -1,0 +1,42 @@
+/*Author: Ariel Mora(arielmora@bennington.edu)
+ *Date: 4/6/2019
+ *The removeByValue function was taken from a class example by Andrew Cencini
+ */
+#include <iostream>
+using namespace std;
+struct node{                //Creates class fro nodes
+    int value;              //Nodes have a value
+    node *next;             //Nodes have a next
+    node(int v, node *n) {  //Gives parameters for node
+        value=v;            //First parameter is an int value
+        next=n;             //Second parameter is a node pointer
+    }};
+int removeByValue(node *, int);
+void traverse(node*);
+int main(){
+    node *e=new node(3, NULL);             //Linked list
+    node *p=new node(2,e);
+    node *s=new node(1, p);
+    int numRemoved= removeByValue(s, 2);    //The value returned for the second item in list s
+    cout<<"removed "<<numRemoved<<" item(s) from list"; //Broadcasts the value removed
+    traverse(s);
+};
+void traverse(node *start){                 //Function to traverse list
+    cout<<"Traversing list ";               //Broadcasts traversing list
+    while(start!=NULL){                     //While start is not NULL
+        cout<<" Value: "<<start->value;     //Broadcast the value of start node
+        start=start->next;                  //Start becomes its next value/ moves through list
+    }
+}
+int removeByValue(node *start, int value){  //Function that removes certain value in any list
+    int numRemoved=0;                   //Removed variable is initially zero
+    node *prev=start;                   //Prev node points to start node
+    node *curr=start->next;             //Curr node points to node after start
+    while(curr!=NULL){                  //While curr is not NUll
+        if(curr->value==value){         //If value of curr becomes inserted value
+            prev->next= curr->next;     //Node after prev equals node after curr
+            numRemoved++;}              //Counter grows each time an item is skipped
+        prev=curr;                 //Prev node becomes curr node
+        curr=curr->next;}          //Curr becomes its own next value
+    return numRemoved;             //Amount of items removed is returned
+    }

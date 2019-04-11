@@ -1,0 +1,37 @@
+/*Author: Ariel Mora(arielmora@bennington.edu)
+ *Date: 4/6/2019
+ */
+#include <iostream>
+using namespace std;
+struct node{                //Creates class for nodes
+    int value;              //Nodes have a value
+    node *next;             //Nodes have a next
+    node(int v, node *n) {  //Gives parameters for node
+        value=v;            //First parameter is an int value
+        next=n;             //Second parameter is a node pointer
+    }};
+void addToBeginning(node *start, node *newNode){    //Function uses start of list and a newNode
+    newNode->next=start;                            //After the newNode is the start of the list
+}
+void addToBeginning2(node**start, node *newNode){   //Function uses node two places ahead of start and a newNode
+    newNode->next=*start;                           //Next for newNode is pointer to start
+    *start=newNode;                                 //The pointer to start is the newNode/ newNode comes two places before start
+}
+void traverse(node*);
+int main(){
+    node *e=new node(3, NULL);      //Linked list
+    node *p=new node(2,e);
+    node *s=new node(1, p);
+    node *newNode=new node(0,NULL);         //The newNode has a value of 0 and next of NULL
+    addToBeginning(s, newNode);             //Function adds the newNode to beginning of list s
+    s=newNode;                              //The newNode becomes the beginning of list s
+    addToBeginning2(&s, new node(-1, NULL));//Function adds new node before the new node at front of list s
+    traverse(s);
+};
+void traverse(node *start){                 //Function to traverse list
+    cout<<"Traversing list ";               //Broadcasts traversing list
+    while(start!=NULL){                     //While start is not NULL
+        cout<<" Value: "<<start->value;     //Broadcast the value of start node
+        start=start->next;                  //Start becomes its next value/ moves through list
+    }
+}

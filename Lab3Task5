@@ -1,0 +1,43 @@
+/*Author: Ariel Mora(arielmora@bennington.edu)
+*Date: 4/9/2019
+*/
+#include <iostream>
+using namespace std;
+struct node{                //Creates class for nodes
+    int value;              //Nodes have a value
+    node *next;             //Nodes have a next
+    node(int v, node *n) {  //Gives parameters for node
+        value=v;            //First parameter is an int value
+        next=n;             //Second parameter is a node pointer
+    }};
+node *removeAtStart(node *start);
+void traverse(node*);
+int main(){
+    node *e=new node(3, NULL);              //Linked list
+    node *p=new node(2,e);
+    node *s=new node(1, p);
+    traverse(s);
+    node *ns= removeAtStart(s);         //Node which points to new start of list s
+    cout<<"New start is "<< ns->value<<endl;    //Broadcasts new starting node value
+    traverse(ns);
+};
+void traverse(node *start){                 //Function to traverse list
+    cout<<"Traversing list ";               //Broadcasts traversing list
+    while(start!=NULL){                     //While start is not NULL
+        cout<<" Value: "<<start->value<<endl;     //Broadcast the value of start node
+        start=start->next;                  //Start becomes its next value/ moves through list
+    }
+}
+node *removeAtStart(node *start){   //Function that removes first item in list
+    node *prev= start;              //Prev node points to start node
+    node *curr= start->next;        //Curr node points to node after start
+    while(curr->next!=NULL){        //While the next for curr is not NULL
+        if(curr==start){            //If curr reaches start
+            prev->next=curr->next;  //Then that item in the list is skipped
+        }
+        prev=curr;          //After start the prev node equals the curr node
+        curr=curr->next;    //The curr node becomes the next node in list
+    }
+    node *ns= start->next;  //The new start node points to node after next
+    return ns;              //Function returns node that points to new start of the list
+}

@@ -1,0 +1,41 @@
+/*Author: Ariel Mora(arielmora@bennington.edu)
+ *Date: 4/6/2019
+ */
+#include <iostream>
+using namespace std;
+struct node{                //Creates class for nodes
+    int value;              //Nodes have a value
+    node *next;             //Nodes have a next
+    node(int v, node *n) {  //Gives parameters for node
+        value=v;            //First parameter is an int value
+        next=n;             //Second parameter is a node pointer
+    }};
+void addAtIndex(node*, node*, int);
+void traverse(node*);
+int main(){
+    node *z=new node(4,NULL);
+    node *e=new node(3, z);              //Linked list
+    node *p=new node(2,e);
+    node *s=new node(1, p);
+    addAtIndex(s ,new node(100, NULL), 3);  //Adds node with value 100 after the index specified
+    traverse(s);
+};
+void traverse(node *start){                 //Function that traverses through list
+    cout<<"Traversing list";
+    while(start!=NULL){
+        cout<<" Value:"<<start->value<<endl;
+        start=start->next;
+    }
+}
+void addAtIndex(node *start, node *newNode, int index){ //Function that inserts any new node at
+    int i=0;                                 //Variable i is equal to 0
+    node *curr=start;                        //Curr points to start node
+    while(i<index){                          //While i is less than index
+        i++;                                 //Variable i keeps increasing
+        if(i==index){                        //When i reaches index
+         curr->next=newNode;                 //The next node will be the newNode
+     }
+        curr=curr->next;                     //When i is not equal to index, list traverses
+        newNode->next=curr->next;            //After the newNode is the next node
+    }
+}

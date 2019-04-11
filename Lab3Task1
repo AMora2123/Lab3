@@ -1,0 +1,34 @@
+/*Author: Ariel Mora(arielmora@bennington.edu)
+ *Date: 4/6/2019
+ *Both traverse and addToEnd functions are Andrew Cencini's in class examples
+ */
+#include <iostream>
+using namespace std;
+struct node{                //Creates class for nodes
+    int value;              //Nodes have a value
+    node *next;             //Nodes have a next
+    node(int v, node *n) {  //Gives parameters for node
+        value=v;            //First parameter is an int value
+        next=n;             //Second parameter is a node pointer
+    }};
+void addToEnd(node *start, node *newNode){  //Function for adding newNode to linked list
+    node *curr=start;                       //The curr node points to start
+    while(curr->next!=NULL){                //While the next of curr is not NULL
+        curr=curr->next;}                   //Curr traverses the list normally
+    curr->next=newNode;                     //When the next is NULL then next is the newNode
+}
+void traverse(node*);
+int main(){
+    node *e=new node(3, NULL);              //Linked list
+    node *p=new node(2,e);
+    node *s=new node(1, p);
+    addToEnd(s, new node(4,NULL));          //Adds node to the end of linked list s
+    traverse(s);
+};
+void traverse(node *start){                 //Function to traverse list
+    cout<<"Traversing list ";               //Broadcasts traversing list
+    while(start!=NULL){                     //While start is not NULL
+        cout<<" Value: "<<start->value;     //Broadcast the value of start node
+        start=start->next;                  //Start becomes its next value/ moves through list
+    }
+}

@@ -1,0 +1,30 @@
+/*Author: Ariel Mora(arielmora@bennington.edu)
+*Date: 4/10/2019
+*/
+#include <iostream>
+struct node{                //Creates class for nodes
+   int value;              //Nodes have a value
+   node *next;             //Nodes have a next
+   node(int v, node *n) {  //Gives parameters for node
+       value=v;            //First parameter is an int value
+       next=n;             //Second parameter is a node pointer
+   }};
+using namespace std;
+node *findByValue(node *start, int value);
+int main(){
+    node *e=new node(3, NULL);              //Linked list
+    node *p=new node(2,e);
+    node *s=new node(1, p);
+    node *r=findByValue(s, 3);          //Function returns the node pointed to by node r
+    cout<<"Found: "<<r->value<<endl;    //Broadcasts the value found in list
+}
+node *findByValue(node *start, int value){  //Function finds item in list with a certain
+    int val=0;
+    node *curr=start;             //Curr node points to node after start
+   while(curr!=NULL){                   //While curr is not NULL
+       if(curr->value==value){          //When value of curr equals input value
+           val=curr->value;             //Integer val will equal the input value
+       }curr=curr->next;            //Curr becomes the node after curr
+}node *r=new node(val, NULL); //Node r points a new node with value of val
+    return r;       //The node is returned to main
+}
