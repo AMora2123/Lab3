@@ -1,0 +1,99 @@
+/*Author: Ariel Mora(arielmora@bennington.edu)
+*Date: 5/10/2019
+*/
+#include <iostream>
+using namespace std;
+struct node{                //Creates class for nodes
+    node *prev;
+    int value;              //Nodes have a value
+    node *next;             //Nodes have a next
+    node(node *p, int v, node *n) {  //Gives parameters for node
+        prev=p;             //First parameter is a previous pointer
+        value=v;            //Second parameter is an int value
+        next=n;             //Third parameter is a next pointer
+    }};
+void addToBeginning(node *start, node *newNode){
+    newNode->next=start;                            //After the newNode is the start of the list
+    while(start->next!=NULL){                //While the next of start is not NULL
+        start=start->next;}                   //Start traverses the list normally
+    while(start->prev!=NULL){                 //while the prev node is not NULL the list goes backward
+        start=start->prev;}
+    if(start->prev==NULL){                  //If list gets to the end then the prev will be the newNode
+        start->prev=newNode;
+    }
+}
+void addToBeginning2(node**start, node *newNode){   //Function uses node two places ahead of start and a newNode
+    newNode->next=*start;                           //Next for newNode is pointer to start
+    *start=newNode;
+}
+void addAtIndex(node*, node*, node*);
+void traverseReverse(node *start);
+void addToEnd(node *, node *);
+int main(){
+    node *f=new node(NULL,1,NULL);   //First item in list
+    node *e=new node(f,2,NULL);         //Second Item in list
+    node *p=new node(e,3,NULL);     //Third item in list
+    node *z=new node(p,4,NULL);     //Fourth item in list
+    node *s=new node(NULL,1,new node(f,2,new node(e,3,new node(p,4,NULL))));//Pointer to start of the list which include all items in list s
+
+    node *d=new node(z, 5, NULL);   //A new item
+    addToEnd(s, d);     //Function uses the start of list and the new item, to add item at end of list
+    node *w=new node(NULL, -1, NULL);   //Another item
+    node *n=new node(w, 0, s);         //A new item with a prev of another new item, value of 0 and next pointing to the start of the list
+    addToBeginning( s, n);             //Function adds the newNode to the beginning of list, as the list traverses backwards
+
+    s=n;                              //The newNode becomes the beginning of list s
+    addToBeginning2(&s, w);                 //Function adds new node before the new node at front of list s
+    node *r=new node(p, 10, z); //A new item
+    addAtIndex(s,r,p);  //Adds node r with value 10 after the node p in list s.
+
+    traverseReverse(s);};
+
+void traverseReverse(node *start){
+    cout<<" Reversing list "<<endl;     //Broadcasts reversing list
+    cout<<"start: "<<start->value<<endl;    //Broadcasts first item in list
+    start=start->next;          //Traverses forward
+        while(start->next!=NULL){   //While next is not NULL
+            cout<<"forward: "<<start->value<<endl;  //Broadcasts forward and then value
+            start=start->next;  //Move forward
+        }
+        if(start->next==NULL){      //If we are at the end of the list
+            cout<<"stop: "<<start->value<<endl; //Broadcast Last item in list
+            start=start->prev;  //Turn around
+        }
+        while(start!=NULL){  //Until the beginning of the list
+            cout<<"backward: "<<start->value<<endl;//Broadcast the item
+            start=start->prev;//Go backwards
+        }}
+void addToEnd(node *start, node *newNode){  //Function for adding newNode to linked list
+    node *curr=start;                       //The curr node points to start
+    while(curr->next!=NULL){                //While the next of curr is not NULL
+        curr=curr->next;}                   //Curr traverses the list normally
+    curr->next=newNode;                     //When the next is NULL then the next is the newNode
+    while(curr->prev!=NULL){    //While prev is not NULL
+        curr=curr->prev;        //CURR becomes the prev node
+    }
+}
+void addAtIndex(node *start, node *newNode, node *afterNode) { //Function that inserts any new node at
+    while (start->next != NULL) {          //While start has a next
+        cout << start->value << endl;
+        if (start->prev == afterNode->prev) {    //When start reaches the afterNode
+            start = newNode;        //The start becomes the newNode
+            cout << start->value << endl;
+        }start = start->next;   //Traverses forward through list
+        newNode->next = start->next;  //After the newNode is the next item in list
+    }cout << start->value << endl;
+    if (start->next == NULL) {      //If there is no next node
+        start = start->prev;        //start becomes the previous node in list
+        cout << start->value << endl;
+    }
+    while (start->prev != NULL) {       //While start has a prev node
+        if(start->prev==afterNode){     //If start prev is the afterNode
+            start=newNode;      //Start becomes the newNode
+            cout << start->value << endl;
+        }start = start->prev;        //Traverses the list backwards
+        newNode->prev = start->prev;    //The node before newNode is the node before start
+        cout << start->value << endl;
+    } //For this addAtIndex function I was unsure of how to implement the
+    // function with the traverseReverse function. So I just put in cout throughout
+    //the addAtIndex function.
